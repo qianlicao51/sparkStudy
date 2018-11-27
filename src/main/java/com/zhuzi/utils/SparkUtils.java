@@ -1,4 +1,4 @@
-package com.zhuzi.booka;
+package com.zhuzi.utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ import org.apache.spark.storage.StorageLevel;
 /**
  * @Title: SparkUtils.java
  * @Package com.zhuzi.booka
- * @Description: TODO(用一句话描述该文件做什么)
+ * @Description: TODO(sparkUtils)
  * @author 作者 grq
  * @version 创建时间：2018年11月27日 下午2:11:02
  *
