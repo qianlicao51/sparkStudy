@@ -1,9 +1,11 @@
 package com.zhuzi.booka.char03;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.api.java.function.FlatMapFunction;
 
 import scala.Tuple2;
 
@@ -22,7 +24,7 @@ public class Demo01 {
 
 	public static void main(String[] args) {
 		// parBy(sparkContext);
-		buildRDD();
+		transFlatMap();
 	}
 
 	/**
@@ -52,9 +54,39 @@ public class Demo01 {
 		JavaRDD<Integer> parallelize = sparkContext.parallelize(Arrays.asList(1, 2, 3, 4, 5));
 		System.out.println(parallelize.collect());
 	}
-	
-	static void readFileToRDD(){
-		
+
+	/**
+	 * 示例 3-7 创建分区数为4的RDD
+	 */
+	static void readFileToRDD() {
+		String filePath = "data/txt/20.TXT";
+		JavaRDD<String> textFile = sparkContext.textFile(SparkUtils.getFilePath(filePath), 4);
+		System.out.println(textFile.partitions().size());
 	}
 
+	/**
+	 * 例3-9
+	 */
+	static void transMapValue() {
+		JavaRDD<String> rdd = sparkContext.parallelize(Arrays.asList("dog", "tiger", "loin", "cat", "panther", "eagle"));
+		JavaRDD<Tuple2<Integer, String>> map = rdd.map(t -> new Tuple2<Integer, String>(t.length(), t));
+		System.out.println(map.collect());
+	}
+
+	/**
+	 * 例 3-11.flatMap
+	 */
+	static void transFlatMap() {
+		JavaRDD<Integer> rdd = sparkContext.parallelize(Arrays.asList(1, 2, 3));
+
+		JavaRDD<String> flatMap = rdd.flatMap(new FlatMapFunction<Integer, String>() {
+			@Override
+			public Iterator<String> call(Integer t) throws Exception {
+				return Arrays.asList(t + "<>" + t).iterator();
+			}
+		});
+		System.out.println(flatMap.collect());
+		JavaRDD<String> map = rdd.map(t -> t + "<>" + t);
+		System.out.println(map.collect());
+	}
 }

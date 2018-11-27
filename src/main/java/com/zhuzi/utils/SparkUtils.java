@@ -1,8 +1,10 @@
 package com.zhuzi.utils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.io.Resources;
 import org.apache.spark.SparkContext;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
@@ -39,7 +41,7 @@ public class SparkUtils {
 	 * SparkSession创建方式
 	 */
 	public static SparkSession buildSparkSession() {
-		SparkSession sparkSession = SparkSession.builder().appName("JavaSparkPi").master("local").getOrCreate();
+		SparkSession sparkSession = SparkSession.builder().appName("JavaSparkPi").master("local").config("spark.sql.shuffle.partitions", 1).getOrCreate();
 		return sparkSession;
 	}
 
@@ -126,4 +128,19 @@ public class SparkUtils {
 		return sparkSession.createDataFrame(rowRDD, schema);
 	}
 
+	/**
+	 * 根据文件 路径获取问价
+	 * 
+	 * @return
+	 */
+	public static String getFilePath(String filePah) {
+		try {
+			filePah = Resources.getResourceAsFile(filePah).getAbsolutePath();
+		} catch (IOException e) {
+			filePah = "data/json/person.json";
+			System.out.println("获取文件失败，使用默认文件");
+		}
+		return filePah;
+
+	}
 }
