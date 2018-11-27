@@ -93,3 +93,67 @@ sparkContext.parallelize(Arrays.asList(1, 2, 3, 4, 5));
 
 ### 3.3.2 基于外部存储的创建操作
 
+```java
+/**
+ * 示例 3-7 创建分区数为4的RDD
+ */
+static void readFileToRDD() {
+	String filePath = "data/txt/20.TXT";
+	JavaRDD<String> textFile = sparkContext.textFile(SparkUtils.getFilePath(filePath), 4);
+	System.out.println(textFile.partitions().size());
+}
+
+```
+
+### 3.4 常见执行操作
+
+​	执行操作是向应用程序返回值或向存储系统导出数据的操作，常见的有 first  count collect take等
+
+## 3.5 常见转换操作
+
+​	转换操作是能够从已有的RDD得到新的RDD。Spark提供了丰富的转换操作。
+
+​	
+
+### 3.5.1 一元转换操作
+
+​	
+
+- map 不做解释了，
+
+- mapValues——适用于Key-Value对形式的RDD，即RDD中的每个数据都是有序二元组。针对key-value对中的每个value值进行制定的函数运算(一对一映射)，得到新的value，所有新的key-value构成新的RDD
+
+
+
+  ```java
+  static void transMapValue() {
+  	JavaRDD<String> rdd = sparkContext.parallelize(Arrays.asList("dog", "tiger", "loin", "cat", "panther", "eagle"));
+  	JavaRDD<Tuple2<Integer, String>> map = rdd.map(t -> new Tuple2<Integer, String>(t.length(), t));
+  	System.out.println(map.collect());
+  }
+  ```
+
+
+- flatMap 与map类似，针对RDD中的每个元素，经过制定的函数(一对多映射)运算后生成若干个新元素。
+
+
+
+- groupByKey 针对key-value对形式RDD，以KEY值作为依据，对value值进行分组
+- reduceByKey 针对Key-Value形式的RDD，对具有相同key的value进行制定的函数运算。再把计算结果与key值组成一个新的key-value对。
+
+
+
+### 3.5.2 二元转换操作
+
+- union 将两个RDD中的元素进行合并，将结果封装成新的RDD，类似于讲个集合的合并运算。
+- intersection 类似集合的交运算
+
+
+
+
+
+
+
+# 5 GraphX
+
+​	
