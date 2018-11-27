@@ -5,6 +5,8 @@ import java.util.Arrays;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 
+import scala.Tuple2;
+
 import com.zhuzi.utils.SparkUtils;
 
 /**
@@ -16,8 +18,22 @@ import com.zhuzi.utils.SparkUtils;
  *
  */
 public class Demo01 {
+	static JavaSparkContext sparkContext = SparkUtils.getJavaSparkContext();
+
 	public static void main(String[] args) {
-		setPart();
+		// parBy(sparkContext);
+		buildRDD();
+	}
+
+	/**
+	 * 想模拟宽窄依赖，但是不知道java版本对于的API放弃
+	 * 
+	 * @param sparkContext
+	 */
+	private static void parBy(JavaSparkContext sparkContext) {
+		JavaRDD<Integer> rdd = sparkContext.parallelize(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8));
+		JavaRDD<Tuple2<Integer, Integer>> mapRDD = rdd.map(t -> new Tuple2<Integer, Integer>(t, t));
+
 	}
 
 	/**
@@ -31,4 +47,14 @@ public class Demo01 {
 		System.out.println("分区数量是：" + size);
 		// 分区数量是：4
 	}
+
+	static void buildRDD() {
+		JavaRDD<Integer> parallelize = sparkContext.parallelize(Arrays.asList(1, 2, 3, 4, 5));
+		System.out.println(parallelize.collect());
+	}
+	
+	static void readFileToRDD(){
+		
+	}
+
 }

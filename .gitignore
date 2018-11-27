@@ -25,3 +25,9 @@ hs_err_pid*
 /.classpath
 /.project
 /target/
+/.project
+/.classpath
+/metastore_db
+/derby.log
+/.settings/*
+/bin/

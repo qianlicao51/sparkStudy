@@ -1,0 +1,30 @@
+https://blog.csdn.net/wulex/article/details/78278092
+
+https://blog.csdn.net/Kinger0/article/details/43239285
+
+
+-------------------------------------------------------
+//tbDate.txt文件定义了日期的分类，将每天分别赋予所属的月份、星期、季度等属性
+//日期，年月，年，月，日，周几，第几周，季度，旬、半月
+2003-1-1,200301,2003,1,1,3,1,1,1,1
+
+
+CREATE TABLE tblDate(
+dateID string,theyearmonth string,theyear string,themonth string,thedate string,theweek string,theweeks string,thequot string,thetenday string,thehalfmonth string) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' ;
+
+-------------------------------------------------------
+//tbStock.txt文件定义了订单表头
+//订单号，交易位置，交易日期
+BYSL00000893,ZHAO,2007-8-23
+
+CREATE TABLE tblStock(ordernumber STRING,locationid STRING,dateID string) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' 
+ 
+-------------------------------------------------------
+/tbStockDetail.txt文件定义了订单明细
+//订单号，行号，货品，数量，单价，金额
+BYSL00000893,0,FS527258160501,-1,268,-268
+
+CREATE TABLE tblStockDetail(ordernumber STRING,rownum int,itemid STRING,qty INT,price int ,amount int) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' ;
+-------------------------------------------------------
+-------------------------------------------------------
+-------------------------------------------------------
