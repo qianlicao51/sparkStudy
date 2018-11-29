@@ -1,0 +1,16 @@
+www.a.com 90
+www.b.com 1
+www.c.com 39
+www.d.com 15
+www.e.com 72
+www.f.com 83
+www.g.com 23
+www.h.com 65
+www.i.com 37
+www.j.com 100
+www.k.com 101
+www.l.com 103
+www.m.com 105
+www.n.com 109
+www.o.com 97
+www.p.com 812

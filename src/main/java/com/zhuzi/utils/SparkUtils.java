@@ -4,12 +4,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.ibatis.io.Resources;
 import org.apache.spark.SparkContext;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.Function;
 import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.Encoder;
+import org.apache.spark.sql.Encoders;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.RowFactory;
 import org.apache.spark.sql.SparkSession;
@@ -17,6 +20,11 @@ import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
 import org.apache.spark.storage.StorageLevel;
+
+import com.google.common.reflect.Reflection;
+
+import scala.Function1;
+import scala.reflect.internal.Trees.This;
 
 /**
  * @Title: SparkUtils.java
@@ -28,7 +36,7 @@ import org.apache.spark.storage.StorageLevel;
  */
 public class SparkUtils {
 
-	static SparkSession sparkSession;
+	public static SparkSession sparkSession;
 	static JavaSparkContext sc;
 	static {
 		if (sparkSession == null) {
@@ -55,6 +63,10 @@ public class SparkUtils {
 		SparkContext sparkContext = sparkSession.sparkContext();
 		return new JavaSparkContext(sparkContext);
 
+	}
+
+	public static SparkContext getSparkContext() {
+		return sparkSession.sparkContext();
 	}
 
 	/**
@@ -94,11 +106,34 @@ public class SparkUtils {
 		JavaRDD<Row> rowRDD = sparkSession.sparkContext().textFile(filePath, 1).toJavaRDD().map(new Function<String, Row>() {
 			@Override
 			public Row call(String record) throws Exception {
+				RowFactory.create();
 				return RowFactory.create(record.split(fileSplit));
 			}
 		});
 
 		return sparkSession.createDataFrame(rowRDD, schema);
+	}
+
+	public static <T> Dataset<T> txtfileToDateSet(SparkSession sparkSession, String filePath, String fileSplit, T t) {
+
+		// return sparkSession.createDataFrame(rowRDD, schema);
+		sparkSession.read().textFile(filePath).javaRDD().map(new Function<String, T>() {
+			@Override
+			public T call(String v1) throws Exception {
+				String[] split = v1.split(fileSplit);
+
+				Class<?> forName = Class.forName(t.getClass().getName());
+
+				Object invoke = t.getClass().getMethod("build").invoke(t, split);
+				T newInstance = (T) forName.newInstance();
+
+				return null;
+			}
+		});
+
+		// Encoder<LogBean> logEncoder = Encoders.bean(LogBean.class);
+		return null;
+
 	}
 
 	/**

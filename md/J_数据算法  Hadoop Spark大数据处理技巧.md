@@ -205,6 +205,13 @@ public class Tuplecompatrtor implements Comparator<Tuple2<String, String>> {
 
 ​	
 
+-  step1 创建sparkContext 读取文件作为RDD
+-  step2 创建tuple<Integer ,String>
+-  step3 为各个输入分区创建 一个本地top 10
+-  step4 收集本地top 10创建最终的top 
+
+
+
 
 
 ## Spark实现：非唯一键
