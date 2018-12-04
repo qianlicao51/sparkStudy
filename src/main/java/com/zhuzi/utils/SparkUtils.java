@@ -1,10 +1,12 @@
 package com.zhuzi.utils;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.io.Resources;
+import org.apache.spark.SparkConf;
 import org.apache.spark.SparkContext;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
@@ -41,7 +43,9 @@ public class SparkUtils {
 	 * SparkSession创建方式
 	 */
 	public static SparkSession buildSparkSession() {
-		SparkSession sparkSession = SparkSession.builder().appName("JavaSparkPi").master("local").config("spark.sql.shuffle.partitions", 1).config("spark.shuffle.manager", "sort").getOrCreate();
+		SparkConf sparkConf = new SparkConf();
+		sparkConf.setAppName("JavaSparkPi").setMaster("local[1]").set("spark.sql.shuffle.partitions", "1").set("spark.shuffle.manager", "sort").set("spark.serializer", "org.apache.spark.serializer.KryoSerializer");
+		SparkSession sparkSession = SparkSession.builder().config(sparkConf).getOrCreate();
 		return sparkSession;
 	}
 
