@@ -1,6 +1,7 @@
 package com.zhuzi.utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.spark.SparkContext;
@@ -16,6 +17,7 @@ import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
+import org.apache.spark.storage.StorageLevel;
 
 /**
  * @Title: ReadFile.java
@@ -146,4 +148,14 @@ public class ReadFile {
 		// |www.e.com| 72|
 		// +---------+-----+
 	}
+
+	private static void readHdfsByBean() {
+		JavaRDD<String> textFile = sc.textFile(filePath);
+		textFile.persist(StorageLevel.MEMORY_AND_DISK());
+		JavaRDD<Integer> parallelize = sc.parallelize(Arrays.asList(1, 2, 3, 4, 6));
+		
+		
+
+	}
+
 }
