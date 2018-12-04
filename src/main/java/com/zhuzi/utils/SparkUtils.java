@@ -41,7 +41,7 @@ public class SparkUtils {
 	 * SparkSession创建方式
 	 */
 	public static SparkSession buildSparkSession() {
-		SparkSession sparkSession = SparkSession.builder().appName("JavaSparkPi").master("local").config("spark.sql.shuffle.partitions", 1).getOrCreate();
+		SparkSession sparkSession = SparkSession.builder().appName("JavaSparkPi").master("local").config("spark.sql.shuffle.partitions", 1).config("spark.shuffle.manager", "sort").getOrCreate();
 		return sparkSession;
 	}
 

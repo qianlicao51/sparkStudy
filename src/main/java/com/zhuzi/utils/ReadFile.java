@@ -32,7 +32,8 @@ public class ReadFile {
 	static SparkSession sparkSession = SparkUtils.buildSparkSession();
 
 	public static void main(String[] args) {
-		readTextFile();
+		// readJson();
+		System.out.println(sparkSession.conf().getAll());
 	}
 
 	/**
@@ -52,6 +53,10 @@ public class ReadFile {
 		// | 30| 2| male| 102| lisi| 20000|
 		// | 33| 1| male| 101|zhangsan| 18000|
 		// +---+------+------+----------+--------+-------+
+		Dataset<String> textFile = sparkSession.read().textFile(filePath);
+		textFile.createOrReplaceTempView("temp");
+		sparkSession.sql("select * from temp").show();
+
 	}
 
 	private static void readTextFile() {

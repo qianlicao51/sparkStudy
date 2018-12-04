@@ -220,6 +220,24 @@ public class Tuplecompatrtor implements Comparator<Tuple2<String, String>> {
 
 
 
+# 4 左连接
+
+### 左连接示例
+
+​	比如用户和和交易，用户数据包括地址信息(location_id)，交易数据包括用户身份信息(user_id)。但是不包括地址的直接信息。
+
+​	user(user_id,location_id)
+
+​	transactions(tran_id,prod_id,user_id,quantity,amount)
+
+​	目的是找出每个商品对应的唯一用户地址
+
+
+
+
+
+
+
 # 8 共同好友
 
  	找出共同好友，此处提供3种解决方案：
