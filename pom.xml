@@ -1,4 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.zhuzi</groupId>
 	<artifactId>sparkStudy</artifactId>
@@ -70,17 +72,28 @@
 			<version>${spark.version}</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.spark/spark-mllib-local -->
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-mllib-local_2.11</artifactId>
+			<version>2.3.0</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.spark/spark-mllib -->
-<dependency>
-	<groupId>org.apache.spark</groupId>
-	<artifactId>spark-mllib_2.11</artifactId>
-	<version>${spark.version}</version>
-	<scope>runtime</scope>
-</dependency>
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-mllib_2.12</artifactId>
+			<version>2.4.0</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- <dependency> <groupId>org.apache.spark</groupId> <artifactId>spark-mllib_2.11</artifactId> 
+			<version>${spark.version}</version> <scope>runtime</scope> </dependency> -->
 		<!-- https://mvnrepository.com/artifact/org.apache.spark/spark-mllib -->
 
-		<!-- <dependency> <groupId>org.apache.spark</groupId> <artifactId>spark-streaming_2.11</artifactId> <version>${spark.version}</version> </dependency> <dependency> <groupId>org.apache.spark</groupId> 
-			<artifactId>spark-network-shuffle_2.11</artifactId> <version>${spark.version}</version> </dependency> -->
+		<!-- <dependency> <groupId>org.apache.spark</groupId> <artifactId>spark-streaming_2.11</artifactId> 
+			<version>${spark.version}</version> </dependency> <dependency> <groupId>org.apache.spark</groupId> 
+			<artifactId>spark-network-shuffle_2.11</artifactId> <version>${spark.version}</version> 
+			</dependency> -->
 		<!-- spark /end -->
 		<!-- mybatis为了读取文件使用 -->
 		<dependency>
@@ -122,19 +135,9 @@
 	<build>
 		<plugins>
 			<!-- 用来创建超级JAR包的Maven shade插件 -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-				<version>2.3</version>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>shade</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-shade-plugin</artifactId> 
+				<version>2.3</version> <executions> <execution> <phase>package</phase> <goals> 
+				<goal>shade</goal> </goals> </execution> </executions> </plugin> -->
 		</plugins>
 	</build>
 </project>
